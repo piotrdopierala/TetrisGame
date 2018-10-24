@@ -1,11 +1,26 @@
 package TetrisGame_PD.Main.GameLogic.Grid;
 
-public class Grid {
-    int width;
-    int height;
+import TetrisGame_PD.Main.GameLogic.Element.Element;
 
-    public Grid(int width, int height) {
-        this.width = width;
-        this.height = height;
+public class Grid {
+    private int noSlotsWidth;
+    private int noSlotsHeight;
+
+    private Element runningElement;
+
+    int[][] data;
+
+    public Grid(int noSlotsWidth, int noSlotsHeight) {
+        this.noSlotsWidth = noSlotsWidth;
+        this.noSlotsHeight = noSlotsHeight;
+        data = new int[noSlotsHeight][noSlotsWidth];
     }
+
+
+    public void dockElement(){
+
+    }
+
+
+
 }
