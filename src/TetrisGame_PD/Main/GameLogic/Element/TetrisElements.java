@@ -2,10 +2,15 @@ package TetrisGame_PD.Main.GameLogic.Element;
 
 import TetrisGame_PD.Main.GameLogic.BlockDef;
 
+import java.util.*;
+
 public enum TetrisElements {
     I('I'), J('J'), L('L'), O('O'), S('S'), T('T'), Z('Z');
 
     private char type;
+    private static final List<TetrisElements> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random rnd = new Random();
 
     TetrisElements(char z) {
         type = z;
@@ -38,5 +43,9 @@ public enum TetrisElements {
             default:
                 return new int[4][4];
         }
+    }
+
+    public static TetrisElements randomElement(){
+        return VALUES.get(rnd.nextInt(SIZE));
     }
 }

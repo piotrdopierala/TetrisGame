@@ -9,6 +9,8 @@ public class Element {
     public static int noElement = 0;
     protected int xSlPos = 0; //position X in slots not px (column) on grid
     protected int ySlPos = 0; //position Y in slots not px (row) on grid
+    protected int blocksWidth;// horizontal size of elemnt blocks
+    protected int blocksHeight;// vertical size of element blocks
 
     protected int size;
     private int[][] data;
@@ -31,6 +33,7 @@ public class Element {
         this.size=this.data.length;
         this.xSlPos=xSlPos;
         this.ySlPos=ySlPos;
+        updateBlockSize();
     }
 
 
@@ -48,6 +51,7 @@ public class Element {
         }
         alignTop();
         alignLeft();
+        updateBlockSize();
     }
 
     public void rotate90CCW() {
@@ -64,6 +68,7 @@ public class Element {
         }
         alignTop();
         alignLeft();
+        updateBlockSize();
     }
 
     @Override
@@ -97,7 +102,7 @@ public class Element {
 
     private void alignLeft() {
         if (Arrays.stream(getCol(0)).anyMatch(p -> p != 0)) {
-            return;//column 0 already has at leas one non-zero element. Is alligned to left.
+            return;//column 0 already has at leas one non-zero element. Is aligned to left.
         } else {
             //all zero collumn is zero
             moveLeft();
@@ -148,6 +153,26 @@ public class Element {
 
     public int[] getCurrentSlotPos(){
         return new int[] {xSlPos,ySlPos};
+    }
+
+    private void updateBlockSize(){
+        int xMax=0, yMax=0;
+        for (int i = 0; i < this.data.length; i++) { //i - rows
+            for (int j = 0; j < this.data[0].length; j++) { //j - columns
+                if(data[i][j]!=0){
+                    if(i>yMax)
+                        yMax=i;
+                    if(j>xMax)
+                        xMax=j;
+                }
+            }
+        }
+        blocksWidth = xMax+1;
+        blocksHeight = yMax+1;
+    }
+
+    public int[] getBlocksSize(){
+        return new int[] {blocksHeight,blocksWidth};
     }
 
 

@@ -181,7 +181,7 @@ public class GLGameLoop {
     private void updateGame(GridDraw grd,int timeElapsed) {
         ElementDraw runningElement = grd.getRunningElement();
         sinceLastMoveDown+=timeElapsed;
-        if(sinceLastMoveDown>=200) {
+        if(sinceLastMoveDown>=400) {
             grd.runningElementMoveDown(1);
             sinceLastMoveDown=0;
         }

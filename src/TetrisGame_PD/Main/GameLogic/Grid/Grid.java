@@ -5,8 +5,9 @@ import TetrisGame_PD.Main.GameLogic.Element.ElementDraw;
 import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
 
 public class Grid {
-    private int slotsNoWidth;
-    private int slotsNoHeight;
+    protected int slotsNoWidth;
+    protected int slotsNoHeight;
+
 
     protected ElementDraw runningElement;
 
@@ -35,23 +36,20 @@ public class Grid {
             //in every column search for bottom running block
             for (int j = 0; j < runningElementData.length; j++) { //j - every row
                 if (runningElementData[j][i] != 0) //found running element block, check whats below (next row)
-                    if ((j + 1) >
-                            runningElementData.length) { //does it have running block data below (next row) ?
+                    if ((j + 1) > runningElementData.length) { //does it have running block data below (next row) ?
                         //no running element data below - check if solid block exists below
-                        if (data[runningElPos[1] + j + 1][runningElPos[0]+i] != 0) {
+                        if (data[runningElPos[1] + j + 1][runningElPos[0] + i] != 0) {
                             dockRunning = true;
                             break;
                         }
                     } else {
-                        if (runningElementData[j + 1][i] == 0) {
-                            //no block below - check if solid block exists
-                            if (data[runningElPos[1] + j + 1][runningElPos[0]+i] != 0) {
-                                if(ElementDraw.noElement>=2) {
-                                    int a = 10;
-                                }
-                                dockRunning = true;
-                                break;
+                        //no block below - check if solid block exists
+                        if (data[runningElPos[1] + j + 1][runningElPos[0] + i] != 0) {
+                            if (ElementDraw.noElement >= 2) {
+                                int a = 10;
                             }
+                            dockRunning = true;
+                            break;
                         }
                     }
             }
@@ -91,6 +89,8 @@ public class Grid {
     }
 
     public void newRunningElement() {
-        this.runningElement = new ElementDraw(TetrisElements.T, 0, 0);
+         this.runningElement = new ElementDraw(TetrisElements.randomElement(), 0, 0); //next random element
+        //this.runningElement = new ElementDraw(TetrisElements.I, 0, 0); //next specific element
     }
+
 }

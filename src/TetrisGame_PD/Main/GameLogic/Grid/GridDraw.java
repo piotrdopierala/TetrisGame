@@ -13,7 +13,7 @@ public class GridDraw extends Grid {
 
     public GridDraw(int SlotsNoWidth, int SlotsNoHeight) {
         super(SlotsNoWidth, SlotsNoHeight);
-        runningElement = new ElementDraw(TetrisElements.T,2,0);
+        runningElement = new ElementDraw(TetrisElements.T, 2, 0);
     }
 
     public void draw(int xPos, int yPos, int widthPx, int heightPx) {
@@ -30,7 +30,7 @@ public class GridDraw extends Grid {
         glColor4f(0.15f, 0.15f, 0.5f, 0.0f);
         for (int i = 0; i < data.length; i++) {//rows
             for (int j = 0; j < data[0].length; j++) {//columns
-                if(data[i][j]!=0){
+                if (data[i][j] != 0) {
                     drawRectangle(xOriginPos + slotWidthPx * j, yOriginPos + slotHeightPx * i, slotWidthPx, slotHeightPx);
                 }
             }
@@ -55,13 +55,13 @@ public class GridDraw extends Grid {
 
     }
 
-    private void drawRectangle(int x, int y,int width,int height){
+    private void drawRectangle(int x, int y, int width, int height) {
         glBegin(GL_QUADS);
         {
-            glVertex2d(x,y);
-            glVertex2d(x,y+height);
-            glVertex2d(x+width,y+height);
-            glVertex2d(x+width,y);
+            glVertex2d(x, y);
+            glVertex2d(x, y + height);
+            glVertex2d(x + width, y + height);
+            glVertex2d(x + width, y);
         }
         glEnd();
     }
@@ -72,12 +72,15 @@ public class GridDraw extends Grid {
                 this.runningElement.rotate90CW();
                 break;
             case 2:
-                this.runningElement.moveRight();
+                if((runningElement.getCurrentSlotPos()[0]+runningElement.getBlocksSize()[1])<(slotsNoWidth))
+                    this.runningElement.moveRight();
                 break;
             case 3:
                 break;
             case 4:
-                this.runningElement.moveLeft();
+                if (runningElement.getCurrentSlotPos()[0] > 0) { //block if want to move outside left grid border
+                    this.runningElement.moveLeft();
+                }
                 break;
             case 5:
                 this.runningElement.moveToBeginning();
