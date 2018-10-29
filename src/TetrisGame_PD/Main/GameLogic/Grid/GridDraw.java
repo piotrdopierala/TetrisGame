@@ -13,7 +13,7 @@ public class GridDraw extends Grid {
 
     public GridDraw(int SlotsNoWidth, int SlotsNoHeight) {
         super(SlotsNoWidth, SlotsNoHeight);
-        runningElement = new ElementDraw(TetrisElements.T, 2, 0);
+        runningElement = new ElementDraw(TetrisElements.randomElement(), 2, 0);
     }
 
     public void draw(int xPos, int yPos, int widthPx, int heightPx) {

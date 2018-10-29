@@ -66,6 +66,7 @@ public class Grid {
                     }
                 }
             }
+            removeAllCompleteLines();
             newRunningElement();
         }
 
@@ -91,6 +92,42 @@ public class Grid {
     public void newRunningElement() {
          this.runningElement = new ElementDraw(TetrisElements.randomElement(), 0, 0); //next random element
         //this.runningElement = new ElementDraw(TetrisElements.I, 0, 0); //next specific element
+    }
+
+    /**
+     * Returns number of complete line to remove from
+     * @return index of line that is complete and ready to be removed
+     */
+    private int searchLineComplete(){
+        int noBlksInRow;
+        for (int i = this.getSlotsNoHeight()-2; i > 0 ; i--) { //i-row
+            noBlksInRow=0;
+            for (int j = 0; j < this.getSlotsNoWidth(); j++) {
+                if(data[i][getSlotsNoWidth()-1-j]!=0){
+                    noBlksInRow++;
+                }
+            }
+            if(noBlksInRow==getSlotsNoWidth()){
+                //System.out.println("Line: "+i+" is complete.");
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void removeAllCompleteLines(){
+        int lineToRemove=-1;
+        while((lineToRemove= searchLineComplete())>=0){
+            removeCompleteLine(lineToRemove);
+        }
+    }
+
+    private void removeCompleteLine(int lineNo){
+        System.out.println("Removing " + lineNo + " line.");
+        data[lineNo] = new int[data[0].length]; //fill with zero's
+        for (int i = lineNo; i >0; i--) {
+            data[i]=data[i-1];
+        }
     }
 
 }
