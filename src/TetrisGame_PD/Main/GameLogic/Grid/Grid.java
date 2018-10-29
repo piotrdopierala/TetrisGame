@@ -15,9 +15,20 @@ public class Grid {
         this.slotsNoWidth = SlotsNoWidth;
         this.slotsNoHeight = SlotsNoHeight;
         data = new int[SlotsNoHeight][SlotsNoWidth];
+
+        //fill bottom row with blocks
+        for (int i = 0; i < SlotsNoWidth; i++) {
+            data[SlotsNoHeight-1][i]=100;
+        }
     }
 
+    //checks if running element is to be docked in bottom elements stack.
     public void dockElement(){
+        int[][] runningElement = this.runningElement.getData();
+        //put running element in new data array;
+        int[][] dataWithElement = data.clone();
+
+
 
     }
 
@@ -29,4 +40,12 @@ public class Grid {
         return slotsNoHeight;
     }
 
+    public ElementDraw getRunningElement() {
+        return runningElement;
+    }
+
+    public void runningElementMoveDown(int noSlots) {
+        runningElement.moveDown(noSlots);
+        dockElement();
+    }
 }

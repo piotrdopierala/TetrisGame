@@ -8,65 +8,82 @@ import java.lang.annotation.ElementType;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class GridDraw {
-    Grid grid;
+public class GridDraw extends Grid {
     private int xOriginPos;
     private int yOriginPos;
-    private int widthPx;
-    private int heightPx;
     private int slotWidthPx;
     private int slotHeightPx;
 
-    public GridDraw(Grid grid) {
-        this.grid = grid;
-        this.grid.runningElement = new ElementDraw(TetrisElements.T, 2, 4);
+    public GridDraw(int SlotsNoWidth, int SlotsNoHeight) {
+        super(SlotsNoWidth, SlotsNoHeight);
+        runningElement = new ElementDraw(TetrisElements.T,2,0);
     }
 
     public void draw(int xPos, int yPos, int widthPx, int heightPx) {
-        this.slotWidthPx = widthPx / grid.getSlotsNoWidth();
-        this.slotHeightPx = heightPx / grid.getSlotsNoHeight();
+        this.slotWidthPx = widthPx / getSlotsNoWidth();
+        this.slotHeightPx = heightPx / getSlotsNoHeight();
         this.xOriginPos = xPos;
         this.yOriginPos = yPos;
-        this.widthPx = widthPx;
-        this.heightPx = heightPx;
 
 
         //Draw running element
-        this.grid.runningElement.draw(this);
+        this.runningElement.draw(this);
+
+        //draw docked elements (elements of previously docked running elements on the bottom of game board;
+        glColor4f(0.15f, 0.15f, 0.5f, 0.0f);
+        for (int i = 0; i < data.length; i++) {//rows
+            for (int j = 0; j < data[0].length; j++) {//columns
+                if(data[i][j]!=0){
+                    drawRectangle(xOriginPos + slotWidthPx * j, yOriginPos + slotHeightPx * i, slotWidthPx, slotHeightPx);
+                }
+            }
+        }
 
         //Draw the grid
         glColor4f(0.45f, 0.45f, 0.45f, 0.0f);
         glBegin(GL_LINES); //drawing horizontal lines of grid
-        for (int i = 0; i <= grid.getSlotsNoWidth(); i++) {
+        for (int i = 0; i <= getSlotsNoWidth(); i++) {
             glVertex2d(xOriginPos + (i * slotWidthPx), yOriginPos);
             glVertex2d(xOriginPos + (i * slotWidthPx), yOriginPos + heightPx);
         }
         glEnd();
 
         glBegin(GL_LINES); //drawing vertical lines of grid
-        for (int i = 0; i <= grid.getSlotsNoHeight(); i++) {
+        for (int i = 0; i <= getSlotsNoHeight(); i++) {
             glVertex2d(xOriginPos, yOriginPos + (i * slotHeightPx));
             glVertex2d(xOriginPos + widthPx, yOriginPos + (i * slotHeightPx));
         }
         glEnd();
 
 
+    }
 
+    private void drawRectangle(int x, int y,int width,int height){
+        glBegin(GL_QUADS);
+        {
+            glVertex2d(x,y);
+            glVertex2d(x,y+height);
+            glVertex2d(x+width,y+height);
+            glVertex2d(x+width,y);
+        }
+        glEnd();
     }
 
     public void keyPressed(int keyPressedCode) {
         switch (keyPressedCode) {
             case 1:
-                this.grid.runningElement.rotate90CW();
+                this.runningElement.rotate90CW();
                 break;
             case 2:
-                this.grid.runningElement.moveRight();
+                this.runningElement.moveRight();
                 break;
             case 3:
                 break;
             case 4:
-                this.grid.runningElement.moveLeft();
+                this.runningElement.moveLeft();
                 break;
+            case 5:
+                this.runningElement.moveToBeginning();
             default:
                 break;
         }

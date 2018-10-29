@@ -22,6 +22,9 @@ public class GLGameLoop {
     private int width;
     private int height;
     private int keyPressedCode;
+    private static final int FRAMES_PER_SECOND = 25;
+    private static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    int sinceLastMoveDown = 0;
 
     public GLGameLoop(int width, int height) {
         this.width = width;
@@ -139,28 +142,61 @@ public class GLGameLoop {
         glLoadIdentity();
         glViewport(0, 0, width, height);
 
+        long nextGameTick = (long) (glfwGetTime() * 1000.0);
+        int sleepTime = 0;
 
-        Grid grd = new Grid(7, 15);
-        GridDraw grdDraw = new GridDraw(grd);
+        //Grid grd = new Grid(7, 15);
+        GridDraw grdDraw = new GridDraw(7,15);
+        long lastUpdateCall=0;
+
 
         //Run the rendering loop until the user has attempted to close
         //the window or has pressed the ESCAPE key.
         while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the framebuffer
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
 
-            grdDraw.keyPressed(keyPressedCode);
-            keyPressedCode = 0;
-            grdDraw.draw(10, 10, width - 20, height - 20);
+            updateGame(grdDraw,(int)(getTime()-lastUpdateCall));
+            lastUpdateCall = getTime();
+            displayGame(grdDraw);
 
 
-            glfwSwapBuffers(window); //swap the color buffers
-
-            //Poll for window events. The key callback above will only be
-            //invoked during this call.
-            glfwPollEvents();
+            nextGameTick += SKIP_TICKS;
+            sleepTime = (int) ((nextGameTick) - getTime());
+            if (sleepTime >= 0) {
+                //Poll for window events. The key callback above will only be
+                //invoked during this call.
+                glfwPollEvents();
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+    }
+
+    private long getTime(){
+        return (long)(glfwGetTime() * 1000.0);
+    }
+
+    private void updateGame(GridDraw grd,int timeElapsed) {
+        ElementDraw runningElement = grd.getRunningElement();
+        sinceLastMoveDown+=timeElapsed;
+        if(sinceLastMoveDown>=2000) {
+            grd.runningElementMoveDown(1);
+            sinceLastMoveDown=0;
+        }
+    }
+
+    private void displayGame(GridDraw grdDraw) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the framebuffer
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        grdDraw.keyPressed(keyPressedCode);
+        keyPressedCode = 0;
+        grdDraw.draw(10, 10, width - 20, height - 20);
+
+        glfwSwapBuffers(window); //swap the color buffers
     }
 
     private void invokeKeyEvent(long window, int key, int scancode, int action, int mods) {
@@ -174,5 +210,7 @@ public class GLGameLoop {
             keyPressedCode = 3;
         if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
             keyPressedCode = 4;
+        if(key==GLFW_KEY_R && action == GLFW_PRESS)
+            keyPressedCode = 5;
     }
 }

@@ -90,7 +90,7 @@ public class Element {
     }
 
     private void alignLeft() {
-        if (Arrays.stream(getCol(0)).anyMatch(p -> p == 1)) {
+        if (Arrays.stream(getCol(0)).anyMatch(p -> p != 0)) {
             return;//column 0 already has at leas one non-zero element. Is alligned to left.
         } else {
             //all zero collumn is zero
@@ -100,7 +100,7 @@ public class Element {
     }
 
     private void alignTop() {
-        if (Arrays.stream(data[0]).anyMatch(p -> p == 1)) {
+        if (Arrays.stream(data[0]).anyMatch(p -> p != 0)) {
             return;//row 0 already has at least one non-zero element. Is alligned to top.
         } else {
             moveUp();
@@ -127,6 +127,20 @@ public class Element {
             System.out.println(Arrays.toString(getRow(i)));
         }
     }
+
+    public void moveDown(int noSlots){
+        ySlPos+=noSlots;
+    }
+
+    public void moveToBeginning(){
+        ySlPos=0;
+    }
+
+    public int[][] getData(){
+        return this.data;
+    }
+
+
 }
 
 
