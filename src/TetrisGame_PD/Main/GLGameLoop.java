@@ -1,9 +1,13 @@
 package TetrisGame_PD.Main;
 
+import TetrisGame_PD.Main.GameLogic.Element.ElementDraw;
+import TetrisGame_PD.Main.GameLogic.Grid.Grid;
+import TetrisGame_PD.Main.GameLogic.Grid.GridDraw;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
+import org.lwjgl.system.NativeType;
 
 import java.nio.IntBuffer;
 
@@ -17,6 +21,7 @@ public class GLGameLoop {
     private long window; //window handle
     private int width;
     private int height;
+    private int keyPressedCode;
 
     public GLGameLoop(int width, int height) {
         this.width = width;
@@ -56,15 +61,12 @@ public class GLGameLoop {
 
 
         //Create the window
-        window = glfwCreateWindow(width, height, "Hello World of OpenGL!", NULL, NULL);
+        window = glfwCreateWindow(width, height, "Gra Tetris.", NULL, NULL);
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
 
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
-        });
+        glfwSetKeyCallback(window, this::invokeKeyEvent);
 
         glfwSetWindowSizeCallback(window, (windows, width, height) -> {
             this.width = width;
@@ -79,7 +81,6 @@ public class GLGameLoop {
             glViewport(0, 0, width, height);
 
         });
-
 
 
         try (MemoryStack stack = stackPush()) {//the stack frame is popped automatically (try-with-resources)
@@ -138,6 +139,10 @@ public class GLGameLoop {
         glLoadIdentity();
         glViewport(0, 0, width, height);
 
+
+        Grid grd = new Grid(7, 15);
+        GridDraw grdDraw = new GridDraw(grd);
+
         //Run the rendering loop until the user has attempted to close
         //the window or has pressed the ESCAPE key.
         while (!glfwWindowShouldClose(window)) {
@@ -145,12 +150,10 @@ public class GLGameLoop {
             glMatrixMode(GL_MODELVIEW);
             glLoadIdentity();
 
-            glBegin(GL_LINES);
-            glVertex2d(10, 10);
-            glVertex2d(width - 10, height - 10);
-            glVertex2d(width - 10, 10);
-            glVertex2d(10, height - 10);
-            glEnd();
+            grdDraw.keyPressed(keyPressedCode);
+            keyPressedCode = 0;
+            grdDraw.draw(10, 10, width - 20, height - 20);
+
 
             glfwSwapBuffers(window); //swap the color buffers
 
@@ -158,5 +161,18 @@ public class GLGameLoop {
             //invoked during this call.
             glfwPollEvents();
         }
+    }
+
+    private void invokeKeyEvent(long window, int key, int scancode, int action, int mods) {
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+            glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+        if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+            keyPressedCode = 1;
+        if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+            keyPressedCode = 2;
+        if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+            keyPressedCode = 3;
+        if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+            keyPressedCode = 4;
     }
 }

@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public class Element {
 
-    int posX = 0; //position X (column, width) on grid
-    int posY = 0; //position Y (row, height) on grid
+    protected int xSlPos = 0; //position X in slots not px (column) on grid
+    protected int ySlPos = 0; //position Y in slots not px (row) on grid
 
-    private int size;
+    protected int size;
     private int[][] data;
 
     public Element(int[][] data) {
@@ -18,6 +18,13 @@ public class Element {
     public Element(int size) {
         this.size = size;
         this.data = new int[size][size];
+    }
+
+    public Element(TetrisElements elType,int xSlPos,int ySlPos){
+        this.data=elType.getArray();
+        this.size=this.data.length;
+        this.xSlPos=xSlPos;
+        this.ySlPos=ySlPos;
     }
 
 
@@ -64,11 +71,11 @@ public class Element {
         return sbld.toString();
     }
 
-    public int[] getRow(int rowNo) {
+    protected int[] getRow(int rowNo) {
         return data[rowNo];
     }
 
-    public int[] getCol(int colNo) {
+    private int[] getCol(int colNo) {
         int[] col = new int[size];
         for (int i = 0; i < size; i++) {
             col[i] = data[i][colNo];
