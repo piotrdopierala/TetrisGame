@@ -1,9 +1,12 @@
 package TetrisGame_PD.Main.GameLogic.Element;
 
+import org.lwjgl.system.windows.POINT;
+
 import java.util.Arrays;
 
 public class Element {
 
+    public static int noElement = 0;
     protected int xSlPos = 0; //position X in slots not px (column) on grid
     protected int ySlPos = 0; //position Y in slots not px (row) on grid
 
@@ -11,16 +14,19 @@ public class Element {
     private int[][] data;
 
     public Element(int[][] data) {
+        noElement++;
         this.size = data.length;
         this.data = data;
     }
 
     public Element(int size) {
+        noElement++;
         this.size = size;
         this.data = new int[size][size];
     }
 
     public Element(TetrisElements elType,int xSlPos,int ySlPos){
+        noElement++;
         this.data=elType.getArray();
         this.size=this.data.length;
         this.xSlPos=xSlPos;
@@ -138,6 +144,10 @@ public class Element {
 
     public int[][] getData(){
         return this.data;
+    }
+
+    public int[] getCurrentSlotPos(){
+        return new int[] {xSlPos,ySlPos};
     }
 
 

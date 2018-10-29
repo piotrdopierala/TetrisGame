@@ -1,10 +1,7 @@
 package TetrisGame_PD.Main.GameLogic.Grid;
 
-import TetrisGame_PD.Main.GameLogic.Element.Element;
 import TetrisGame_PD.Main.GameLogic.Element.ElementDraw;
 import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
-
-import java.lang.annotation.ElementType;
 
 import static org.lwjgl.opengl.GL11.*;
 
