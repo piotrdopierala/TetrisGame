@@ -7,6 +7,7 @@ import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
 public class Grid {
     protected int slotsNoWidth;
     protected int slotsNoHeight;
+    private static int noRemovedLines=0;
 
 
     protected ElementDraw runningElement;
@@ -129,10 +130,11 @@ public class Grid {
     }
 
     private void removeCompleteLine(int lineNo){
-        System.out.println("Removing " + lineNo + " line.");
+        noRemovedLines++;
+        System.out.println("Removing line number" + noRemovedLines + ".");
         data[lineNo] = new int[data[0].length]; //fill with zero's
-        for (int i = lineNo; i >0; i--) {
-            data[i]=data[i-1];
+        for (int i = lineNo; i > 0; i--) {
+            data[i]=data[i-1].clone();
         }
     }
 

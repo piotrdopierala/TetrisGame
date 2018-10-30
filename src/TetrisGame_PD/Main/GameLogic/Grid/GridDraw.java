@@ -1,5 +1,6 @@
 package TetrisGame_PD.Main.GameLogic.Grid;
 
+import TetrisGame_PD.Main.GameLogic.BlockDef;
 import TetrisGame_PD.Main.GameLogic.Element.ElementDraw;
 import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
 
@@ -27,10 +28,35 @@ public class GridDraw extends Grid {
         this.runningElement.draw(this);
 
         //draw docked elements (elements of previously docked running elements on the bottom of game board;
-        glColor4f(0.15f, 0.15f, 0.5f, 0.0f);
         for (int i = 0; i < data.length; i++) {//rows
             for (int j = 0; j < data[0].length; j++) {//columns
                 if (data[i][j] != 0) {
+//                    switch(data[i][j]){
+//                        case BlockDef.SOLID_BLOCK_BLUE:
+//                            glColor4f(0.15f, 0.15f, 0.5f, 0.0f);//blue
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_YELLOW:
+//                            glColor4f(0.242f, 0.242f, 0.013f, 0.0f);//yellow
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_VIOLET:
+//                            glColor4f(0.145f, 0.048f, 0.110f, 0.0f);//violet
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_GREEN:
+//                            glColor4f(0.00f, 0.145f, 0.061f, 0.0f);//green
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_ORANGE:
+//                            glColor4f(0.242f, 0.145f, 0.013f, 0.0f);//orange
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_RED:
+//                            glColor4f(0.217f, 0.00f, 0.038f, 0.0f);//red
+//                            break;
+//                        case BlockDef.SOLID_BLOCK_BROWN:
+//                            glColor4f(0.102f, 0.051f, 0.00f, 0.0f);//brown
+//                            break;
+//                        default:
+                            glColor4f(0.15f, 0.15f, 0.5f, 0.0f);//blue
+//                            break;
+//                    }
                     drawRectangle(xOriginPos + slotWidthPx * j, yOriginPos + slotHeightPx * i, slotWidthPx, slotHeightPx);
                 }
             }
