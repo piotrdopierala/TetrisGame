@@ -9,7 +9,7 @@ public class Element {
     public static int noElement = 0;
     protected int xSlPos = 0; //position X in slots not px (column) on grid
     protected int ySlPos = 0; //position Y in slots not px (row) on grid
-    protected int blocksWidth;// horizontal size of elemnt blocks
+    protected int blocksWidth;// horizontal size of element blocks
     protected int blocksHeight;// vertical size of element blocks
 
     protected int size;

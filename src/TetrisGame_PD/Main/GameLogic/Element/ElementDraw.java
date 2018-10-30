@@ -60,8 +60,8 @@ public class ElementDraw extends Element {
         }
     }
 
-    public void moveLeft(){
-        this.xSlPos-=1;
+    public void moveLeft(int noSlots){
+        this.xSlPos-=noSlots;
     }
 
     public void moveRight(){

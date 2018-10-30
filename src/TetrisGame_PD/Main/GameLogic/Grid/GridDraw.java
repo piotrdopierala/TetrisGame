@@ -95,7 +95,7 @@ public class GridDraw extends Grid {
     public void keyPressed(int keyPressedCode) {
         switch (keyPressedCode) {
             case 1:
-                this.runningElement.rotate90CW();
+                rotateRunningElementCW();
                 break;
             case 2:
                 if((runningElement.getCurrentSlotPos()[0]+runningElement.getBlocksSize()[1])<(slotsNoWidth))
@@ -106,7 +106,7 @@ public class GridDraw extends Grid {
                 break;
             case 4:
                 if (runningElement.getCurrentSlotPos()[0] > 0) { //block if want to move outside left grid border
-                    this.runningElement.moveLeft();
+                    this.runningElement.moveLeft(1);
                 }
                 break;
             case 5:
@@ -132,5 +132,20 @@ public class GridDraw extends Grid {
 
     public int getSlotHeightPx() {
         return slotHeightPx;
+    }
+
+    private void rotateRunningElementCW(){
+        int[] blocksSize = runningElement.getBlocksSize();//get size of block
+        int[] currentSlotPos = runningElement.getCurrentSlotPos(); //get current position in unit of slots
+
+        if(currentSlotPos[0]+blocksSize[0]>this.slotsNoWidth) //if we want to rotate near right grid edge and after rotate horizontal size is bigger, have to move left
+            runningElement.moveLeft((currentSlotPos[0]+blocksSize[0])-this.slotsNoWidth);
+
+        this.runningElement.rotate90CW();
+
+    }
+
+    private void rotateRunningElementCCW(){
+        this.runningElement.rotate90CCW();
     }
 }
