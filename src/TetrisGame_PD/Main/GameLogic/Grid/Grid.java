@@ -102,7 +102,7 @@ public class Grid {
     }
 
     public void newRunningElement() {
-         this.runningElement = new ElementDraw(TetrisElements.randomElement(), this.slotsNoWidth/2, -2p); //next random element
+         this.runningElement = new ElementDraw(TetrisElements.randomElement(), this.slotsNoWidth/2, -2); //next random element
         //this.runningElement = new ElementDraw(TetrisElements.I, 0, 0); //next specific element
     }
 
