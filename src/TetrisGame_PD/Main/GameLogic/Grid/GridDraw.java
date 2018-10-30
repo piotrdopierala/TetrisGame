@@ -31,32 +31,7 @@ public class GridDraw extends Grid {
         for (int i = 0; i < data.length; i++) {//rows
             for (int j = 0; j < data[0].length; j++) {//columns
                 if (data[i][j] != 0) {
-//                    switch(data[i][j]){
-//                        case BlockDef.SOLID_BLOCK_BLUE:
-//                            glColor4f(0.15f, 0.15f, 0.5f, 0.0f);//blue
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_YELLOW:
-//                            glColor4f(0.242f, 0.242f, 0.013f, 0.0f);//yellow
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_VIOLET:
-//                            glColor4f(0.145f, 0.048f, 0.110f, 0.0f);//violet
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_GREEN:
-//                            glColor4f(0.00f, 0.145f, 0.061f, 0.0f);//green
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_ORANGE:
-//                            glColor4f(0.242f, 0.145f, 0.013f, 0.0f);//orange
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_RED:
-//                            glColor4f(0.217f, 0.00f, 0.038f, 0.0f);//red
-//                            break;
-//                        case BlockDef.SOLID_BLOCK_BROWN:
-//                            glColor4f(0.102f, 0.051f, 0.00f, 0.0f);//brown
-//                            break;
-//                        default:
-                            glColor4f(0.15f, 0.15f, 0.5f, 0.0f);//blue
-//                            break;
-//                    }
+                    glColor4f(0.15f, 0.15f, 0.5f, 0.0f);//blue
                     drawRectangle(xOriginPos + slotWidthPx * j, yOriginPos + slotHeightPx * i, slotWidthPx, slotHeightPx);
                 }
             }
@@ -98,7 +73,7 @@ public class GridDraw extends Grid {
                 rotateRunningElementCW();
                 break;
             case 2:
-                if((runningElement.getCurrentSlotPos()[0]+runningElement.getBlocksSize()[1])<(slotsNoWidth))
+                if ((runningElement.getCurrentSlotPos()[0] + runningElement.getBlocksSize()[1]) < (slotsNoWidth))
                     this.runningElement.moveRight();
                 break;
             case 3:
@@ -134,18 +109,18 @@ public class GridDraw extends Grid {
         return slotHeightPx;
     }
 
-    private void rotateRunningElementCW(){
+    private void rotateRunningElementCW() {
         int[] blocksSize = runningElement.getBlocksSize();//get size of block
         int[] currentSlotPos = runningElement.getCurrentSlotPos(); //get current position in unit of slots
 
-        if(currentSlotPos[0]+blocksSize[0]>this.slotsNoWidth) //if we want to rotate near right grid edge and after rotate horizontal size is bigger, have to move left
-            runningElement.moveLeft((currentSlotPos[0]+blocksSize[0])-this.slotsNoWidth);
+        if (currentSlotPos[0] + blocksSize[0] > this.slotsNoWidth) //if we want to rotate near right grid edge and after rotate horizontal size is bigger, have to move left
+            runningElement.moveLeft((currentSlotPos[0] + blocksSize[0]) - this.slotsNoWidth);
 
         this.runningElement.rotate90CW();
 
     }
 
-    private void rotateRunningElementCCW(){
+    private void rotateRunningElementCCW() {
         this.runningElement.rotate90CCW();
     }
 }

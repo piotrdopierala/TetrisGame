@@ -6,8 +6,8 @@ public class TetrisMain {
 
         //todo 1) element is docked one game click too early
         //DONE 2) add functionality to fast forward running element (down arrow)
-        //todo 3) when element rotaded on right grid border, bug that allows element to move outside
-        //todo 4) add different collors to elements
+        //DONE 3) when element rotaded on right grid border, bug that allows element to move outside
+        //DONE 4) add different collors to elements
 
 
     }

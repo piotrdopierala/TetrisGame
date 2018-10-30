@@ -25,7 +25,11 @@ public class Grid {
         }
     }
 
-    //checks if running element is to be docked in bottom elements stack.
+    /**
+     *checks if running element is to be docked in bottom elements stack.
+     * returns true if element was docked on the bottom
+     */
+
     public boolean dockElement() {
         int[][] runningElementData = this.runningElement.getData();
         int[] runningElPos = this.runningElement.getCurrentSlotPos();
@@ -88,8 +92,9 @@ public class Grid {
     }
 
     public boolean runningElementMoveDown(int noSlots) {
+        boolean wasDocked = dockElement();
         runningElement.moveDown(noSlots);
-        return dockElement();
+        return wasDocked;
     }
 
     public void runningElementDockDown(){
@@ -97,7 +102,7 @@ public class Grid {
     }
 
     public void newRunningElement() {
-         this.runningElement = new ElementDraw(TetrisElements.randomElement(), this.slotsNoWidth/2, 0); //next random element
+         this.runningElement = new ElementDraw(TetrisElements.randomElement(), this.slotsNoWidth/2, -2p); //next random element
         //this.runningElement = new ElementDraw(TetrisElements.I, 0, 0); //next specific element
     }
 
