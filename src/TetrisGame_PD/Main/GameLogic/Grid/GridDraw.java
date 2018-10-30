@@ -76,6 +76,7 @@ public class GridDraw extends Grid {
                     this.runningElement.moveRight();
                 break;
             case 3:
+                this.runningElementDockDown();
                 break;
             case 4:
                 if (runningElement.getCurrentSlotPos()[0] > 0) { //block if want to move outside left grid border

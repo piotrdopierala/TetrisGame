@@ -5,8 +5,9 @@ public class TetrisMain {
         new GLGameLoop(500, 900).run();
 
         //todo 1) element is docked one game click too early
-        //todo 2) add functionality to fast forward running element (down arrow)
+        //DONE 2) add functionality to fast forward running element (down arrow)
         //todo 3) when element rotaded on right grid border, bug that allows element to move outside
+        //todo 4) add different collors to elements
 
 
     }
