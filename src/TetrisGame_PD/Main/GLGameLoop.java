@@ -212,5 +212,7 @@ public class GLGameLoop {
             keyPressedCode = 4;
         if(key==GLFW_KEY_R && action == GLFW_PRESS)
             keyPressedCode = 5;
+        if(key==GLFW_KEY_P && action == GLFW_PRESS)
+            keyPressedCode = 6;
     }
 }

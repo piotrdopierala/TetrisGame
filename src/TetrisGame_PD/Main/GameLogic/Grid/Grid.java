@@ -131,10 +131,29 @@ public class Grid {
 
     private void removeCompleteLine(int lineNo){
         noRemovedLines++;
-        System.out.println("Removing line number" + noRemovedLines + ".");
+        //System.out.println("Removing line number" + noRemovedLines + ".");
         data[lineNo] = new int[data[0].length]; //fill with zero's
         for (int i = lineNo; i > 0; i--) {
             data[i]=data[i-1].clone();
+        }
+    }
+
+    protected void removeLinesWithHoles(){
+        System.out.println("użyto tajnego kodu !");
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[0].length; j++) {
+                if(data[i][j]!=0) { //found row (line) with some block, check if has holes
+                    for (int k = 0; k < data[0].length; k++) { //look for empty in that row
+                        if(data[i][k]==0){
+                            if(data[i-1][k]!=0) { //above has block?
+                                //remove line
+                                System.out.println("Usuwam linie "+i+", coś nie pykło.");
+                                removeCompleteLine(i);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

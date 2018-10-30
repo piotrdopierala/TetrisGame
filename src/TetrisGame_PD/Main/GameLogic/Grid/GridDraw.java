@@ -111,6 +111,8 @@ public class GridDraw extends Grid {
                 break;
             case 5:
                 this.runningElement.moveToBeginning();
+            case 6:
+                this.removeLinesWithHoles();
             default:
                 break;
         }
