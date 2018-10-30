@@ -139,19 +139,22 @@ public class Grid {
     }
 
     protected void removeLinesWithHoles(){
+        boolean foundBlockInRow=false;
+        boolean foundEmptyAndBlockAbove=false;
         System.out.println("użyto tajnego kodu !");
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; i < data.length-1; i++) {
+            foundBlockInRow=false;
+            foundEmptyAndBlockAbove=false;
             for (int j = 0; j < data[0].length; j++) {
-                if(data[i][j]!=0) { //found row (line) with some block, check if has holes
-                    for (int k = 0; k < data[0].length; k++) { //look for empty in that row
-                        if(data[i][k]==0){
-                            if(data[i-1][k]!=0) { //above has block?
-                                //remove line
-                                System.out.println("Usuwam linie "+i+", coś nie pykło.");
-                                removeCompleteLine(i);
-                            }
-                        }
-                    }
+                if(data[i][j]!=0)
+                    foundBlockInRow=true;
+                if(data[i][j]==0 && i-1>=0) //above has block
+                    if(data[i-1][j]!=0)
+                    foundEmptyAndBlockAbove=true;
+                if(foundBlockInRow & foundEmptyAndBlockAbove) {
+                    System.out.println("usuwam linie "+i);
+                    removeCompleteLine(i);
+                    break;
                 }
             }
         }
