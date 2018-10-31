@@ -1,6 +1,7 @@
 package TetrisGame_PD.Main.GameLogic.Grid;
 
 
+import TetrisGame_PD.Main.GameLogic.Element.Element;
 import TetrisGame_PD.Main.GameLogic.Element.ElementDraw;
 import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
 
@@ -174,6 +175,58 @@ public class Grid {
                 }
             }
         }
+    }
+
+    /**
+     * Function checks is element has at least one slot space from other blocks on right (checks every elements block)
+     * @param el Element to check (its position and data is taken from this object)
+     * @return true if right is clear, false otherwise.
+     */
+    public boolean isElementClearOnRight(Element el){
+        //check if move to right is possible, check for collision with other blocks
+        int indexLastInRow=-1;
+        int indexLastInRowOnGrid = -1;
+        for (int i = 0; i < el.getBlocksSize()[0]; i++) { //rows
+            indexLastInRow = el.getIndexLastInRow(i);//search for last element on right in current row
+            if(indexLastInRow==-1){ //no blocks in row, break checking current row
+                continue;
+            }
+            indexLastInRowOnGrid=indexLastInRow+el.getCurrentSlotPos()[0];//last in row position on grid
+            if(indexLastInRowOnGrid<slotsNoWidth) { //will not go outside (have to check again to avoid array out of bounds excp.)
+                if(i+el.getCurrentSlotPos()[1]>=0){ //check only rows on grid
+                    if(data[i+el.getCurrentSlotPos()[1]][indexLastInRowOnGrid+1]!=0) { //next block to the right is not empty! cannot move!
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Function checks is element has at least one slot space from other blocks on left (checks every elements block)
+     * @param el Element to check (its position and data is taken from this object)
+     * @return true if left is clear, false otherwise.
+     */
+    public boolean isElementClearOnLeft(Element el){
+        //check if move to left is possible, check for collision with other blocks
+        int indexFirstInRow=-1;
+        int indexFirstInRowOnGrid = -1;
+        for (int i = 0; i < el.getBlocksSize()[0]; i++) { //rows
+            indexFirstInRow = el.getIndexFirstInRow(i);//search for first element (on left side) in current row
+            if(indexFirstInRow==-1){ //no blocks in row, break checking current row
+                continue;
+            }
+            indexFirstInRowOnGrid=indexFirstInRow+el.getCurrentSlotPos()[0];//last in row position on grid
+            if(indexFirstInRowOnGrid-1>0) { //will not go outside (have to check again to avoid array out of bounds excp.)
+                if(i+el.getCurrentSlotPos()[1]>=0){ //check only rows on grid
+                    if(data[i+el.getCurrentSlotPos()[1]][indexFirstInRowOnGrid-1]!=0) { //next block to the left is not empty! cannot move!
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 }

@@ -73,15 +73,18 @@ public class GridDraw extends Grid {
                 rotateRunningElementCW();
                 break;
             case 2:
-                if ((runningElement.getCurrentSlotPos()[0] + runningElement.getBlocksSize()[1]) < (slotsNoWidth))
-                    this.runningElement.moveRight();
+                if ((runningElement.getCurrentSlotPos()[0] + runningElement.getBlocksSize()[1]) < (slotsNoWidth)) { //block if want to move outside right grid border
+                    if (isElementClearOnRight(runningElement))
+                        this.runningElement.moveRight();
+                }
                 break;
             case 3:
                 this.runningElementDockDown();
                 break;
             case 4:
                 if (runningElement.getCurrentSlotPos()[0] > 0) { //block if want to move outside left grid border
-                    this.runningElement.moveLeft(1);
+                    if (isElementClearOnLeft(runningElement))
+                        this.runningElement.moveLeft(1);
                 }
                 break;
             case 5:

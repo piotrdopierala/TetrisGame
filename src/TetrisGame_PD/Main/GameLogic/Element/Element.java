@@ -27,12 +27,12 @@ public class Element {
         this.data = new int[size][size];
     }
 
-    public Element(TetrisElements elType,int xSlPos,int ySlPos){
+    public Element(TetrisElements elType, int xSlPos, int ySlPos) {
         noElement++;
-        this.data=elType.getArray();
-        this.size=this.data.length;
-        this.xSlPos=xSlPos;
-        this.ySlPos=ySlPos;
+        this.data = elType.getArray();
+        this.size = this.data.length;
+        this.xSlPos = xSlPos;
+        this.ySlPos = ySlPos;
         updateBlockSize();
     }
 
@@ -139,40 +139,71 @@ public class Element {
         }
     }
 
-    public void moveDown(int noSlots){
-        ySlPos+=noSlots;
+    public void moveDown(int noSlots) {
+        ySlPos += noSlots;
     }
 
-    public void moveToBeginning(){
-        ySlPos=0;
+    public void moveToBeginning() {
+        ySlPos = 0;
     }
 
-    public int[][] getData(){
+    public int[][] getData() {
         return this.data;
     }
 
-    public int[] getCurrentSlotPos(){
-        return new int[] {xSlPos,ySlPos};
+    public int[] getCurrentSlotPos() {
+        return new int[]{xSlPos, ySlPos};
     }
 
-    private void updateBlockSize(){
-        int xMax=0, yMax=0;
+    private void updateBlockSize() {
+        int xMax = 0, yMax = 0;
         for (int i = 0; i < this.data.length; i++) { //i - rows
             for (int j = 0; j < this.data[0].length; j++) { //j - columns
-                if(data[i][j]!=0){
-                    if(i>yMax)
-                        yMax=i;
-                    if(j>xMax)
-                        xMax=j;
+                if (data[i][j] != 0) {
+                    if (i > yMax)
+                        yMax = i;
+                    if (j > xMax)
+                        xMax = j;
                 }
             }
         }
-        blocksWidth = xMax+1;
-        blocksHeight = yMax+1;
+        blocksWidth = xMax + 1;
+        blocksHeight = yMax + 1;
     }
 
-    public int[] getBlocksSize(){
-        return new int[] {blocksHeight,blocksWidth};
+    public int[] getBlocksSize() {
+        return new int[]{blocksHeight, blocksWidth};
+    }
+
+
+    /**
+     * Returns index (column no from 0) of first block (on left) in the given row
+     *
+     * @param rowNo row in with function will return index of first block on the left
+     * @return Index of first block on the left (-1 if there is no block in row)
+     */
+    public int getIndexFirstInRow(int rowNo) {
+        for (int i = 0; i <= this.blocksWidth-1; i++) {
+            if (data[rowNo][i] != 0) { //block found
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns index (column no from 0) of last block (on right) in the given row
+     *
+     * @param rowNo row in with function will return index of last block (on the right)
+     * @return Index of last block (on the right) (-1 if there is no block in row)
+     */
+    public int getIndexLastInRow(int rowNo) {
+        for (int i = this.blocksWidth-1; i >= 0; i--) {
+            if (data[rowNo][i] != 0) { //block found
+                return i;
+            }
+        }
+        return -1;
     }
 
 

@@ -23,7 +23,7 @@ public class GLGameLoop {
     private int height;
     private int keyPressedCode;
     private static final int FRAMES_PER_SECOND = 25;
-    private static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
+    private static final int SKIP_TICKS = 1000 / FRAMES_PER_SECOND; //ms between game refresh (static framerate)
     int sinceLastMoveDown = 0;
 
     public GLGameLoop(int width, int height) {
