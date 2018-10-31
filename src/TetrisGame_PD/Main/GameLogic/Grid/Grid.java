@@ -17,11 +17,15 @@ public class Grid {
     public Grid(int SlotsNoWidth, int SlotsNoHeight) {
         this.slotsNoWidth = SlotsNoWidth;
         this.slotsNoHeight = SlotsNoHeight;
-        data = new int[SlotsNoHeight][SlotsNoWidth];
+        newCleanGrid();
+    }
+
+    private void newCleanGrid(){
+        data = new int[slotsNoHeight][slotsNoWidth];
 
         //fill bottom row with blocks
-        for (int i = 0; i < SlotsNoWidth; i++) {
-            data[SlotsNoHeight - 1][i] = 100;
+        for (int i = 0; i < slotsNoWidth; i++) {
+            data[slotsNoHeight - 1][i] = 100;
         }
     }
 
@@ -50,9 +54,6 @@ public class Grid {
                     } else {
                         //no block below - check if solid block exists
                         if (data[runningElPos[1] + j + 1][runningElPos[0] + i] != 0) {
-                            if (ElementDraw.noElement >= 2) {
-                                int a = 10;
-                            }
                             dockRunning = true;
                             break;
                         }
@@ -61,6 +62,16 @@ public class Grid {
             if (dockRunning)
                 break;
         }
+
+        //if docking occurs on position on grid that is less than 0 (above the grid) GAME OVER.
+        if(dockRunning && (runningElement.getCurrentSlotPos()[1]<0)){
+            //GAME OVER !!
+            System.out.println("game over :(");
+            newCleanGrid(); //generate new, clean grid
+            newRunningElement(); //new running element.
+            return true;
+        }
+
         if (dockRunning) {
             for (int i = 0; i < runningElementData.length; i++) { //i - row
                 for (int j = 0; j < runningElementData[0].length; j++) { //j-column
