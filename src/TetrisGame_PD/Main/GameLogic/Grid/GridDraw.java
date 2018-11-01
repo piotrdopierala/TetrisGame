@@ -39,17 +39,17 @@ public class GridDraw extends Grid {
 
         //Draw the grid
         glColor4f(0.45f, 0.45f, 0.45f, 0.0f);
-        glBegin(GL_LINES); //drawing horizontal lines of grid
+        glBegin(GL_LINES); //drawing vertical lines of grid
         for (int i = 0; i <= getSlotsNoWidth(); i++) {
             glVertex2d(xOriginPos + (i * slotWidthPx), yOriginPos);
-            glVertex2d(xOriginPos + (i * slotWidthPx), yOriginPos + heightPx);
+            glVertex2d(xOriginPos + (i * slotWidthPx), yOriginPos + (slotHeightPx*slotsNoHeight));
         }
         glEnd();
 
-        glBegin(GL_LINES); //drawing vertical lines of grid
+        glBegin(GL_LINES); //drawing horizontal lines of grid
         for (int i = 0; i <= getSlotsNoHeight(); i++) {
             glVertex2d(xOriginPos, yOriginPos + (i * slotHeightPx));
-            glVertex2d(xOriginPos + widthPx, yOriginPos + (i * slotHeightPx));
+            glVertex2d(xOriginPos + (slotWidthPx*slotsNoWidth), yOriginPos + (i * slotHeightPx));
         }
         glEnd();
 
