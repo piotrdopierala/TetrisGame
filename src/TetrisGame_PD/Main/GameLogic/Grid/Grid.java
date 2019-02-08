@@ -47,19 +47,13 @@ public class Grid {
             //in every column search for bottom running block
             for (int j = 0; j < runningElementData.length; j++) { //j - every row
                 if (runningElementData[j][i] != 0) //found running element block, check whats below (next row)
-                    if ((j + 1) > runningElementData.length) { //does it have running block data below (next row) ?
+                        //does it have running block data below (next row) ?
                         //no running element data below - check if solid block exists below
                         if (data[runningElPos[1] + j + 1][runningElPos[0] + i] != 0) {
                             dockRunning = true;
                             break;
                         }
-                    } else {
-                        //no block below - check if solid block exists
-                        if (data[runningElPos[1] + j + 1][runningElPos[0] + i] != 0) {
-                            dockRunning = true;
-                            break;
-                        }
-                    }
+
             }
             if (dockRunning) {
                 increasePoints(10);
