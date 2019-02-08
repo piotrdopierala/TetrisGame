@@ -8,6 +8,7 @@ import TetrisGame_PD.Main.GameLogic.Element.TetrisElements;
 public class Grid {
     protected int slotsNoWidth;
     protected int slotsNoHeight;
+    private int points;
     private static int noRemovedLines=0;
 
 
@@ -39,7 +40,7 @@ public class Grid {
         int[][] runningElementData = this.runningElement.getData();
         int[] runningElPos = this.runningElement.getCurrentSlotPos();
 
-        // -search every column for bottom block of funning element
+        // -search every column for bottom block of running element
         // -if found check if block below is fixed, if true dock the running element
         boolean dockRunning = false;
         for (int i = (0); i < (runningElementData[0].length); i++) { //i - every column in running element
@@ -60,8 +61,10 @@ public class Grid {
                         }
                     }
             }
-            if (dockRunning)
+            if (dockRunning) {
+                increasePoints(10);
                 break;
+            }
         }
 
         //if docking occurs on position on grid that is less than 0 (above the grid) GAME OVER.
@@ -143,6 +146,7 @@ public class Grid {
         int lineToRemove=-1;
         while((lineToRemove= searchLineComplete())>=0){
             removeCompleteLine(lineToRemove);
+            increasePoints(100);
         }
     }
 
@@ -227,6 +231,12 @@ public class Grid {
             }
         }
         return true;
+    }
+
+    private int increasePoints(int amount){
+        this.points+=amount;
+        System.out.println("PKT:"+this.points);
+        return this.points;
     }
 
 }
