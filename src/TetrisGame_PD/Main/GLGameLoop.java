@@ -145,10 +145,8 @@ public class GLGameLoop {
         long nextGameTick = (long) (glfwGetTime() * 1000.0);
         int sleepTime = 0;
 
-        //Grid grd = new Grid(7, 15);
         GridDraw grdDraw = new GridDraw(7,15);
         long lastUpdateCall=0;
-
 
         //Run the rendering loop until the user has attempted to close
         //the window or has pressed the ESCAPE key.
